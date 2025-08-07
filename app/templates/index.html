@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Election Data News</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    h1 { color: #333; }
+    .article { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid #ccc; }
+    .meta { font-size: 0.9rem; color: #666; }
+    select { margin-bottom: 1rem; padding: 0.4rem; }
+  </style>
+</head>
+<body>
+  <h1>🗳️ Election Data News</h1>
+
+  <form method="get">
+    <label for="topic">Filter by topic:</label>
+    <select name="topic" onchange="this.form.submit()">
+      <option value="">All</option>
+      {% for topic in topics %}
+        <option value="{{ topic }}" {% if topic == selected_topic %}selected{% endif %}>{{ topic }}</option>
+      {% endfor %}
+    </select>
+  </form>
+
+  {% for article in articles %}
+    <div class="article">
+      <h2><a href="{{ article.url }}" target="_blank">{{ article.title }}</a></h2>
+      <div class="meta">
+        <strong>Topics:</strong> {{ article.topics | join(', ') }}<br>
+        <strong>People:</strong> {{ article.entities.people | join(', ') }}<br>
+        <strong>Locations:</strong> {{ article.entities.locations | join(', ') }}
+      </div>
+    </div>
+  {% endfor %}
+</body>
+</html>
