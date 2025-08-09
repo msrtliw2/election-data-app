@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Election Data News</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 2rem; }
+    header { display:flex; align-items:center; gap:1rem; margin-bottom:1.25rem; }
+    .article { margin: 1.25rem 0; padding-bottom: 1rem; border-bottom: 1px solid #e5e7eb; }
+    .meta { font-size:.9rem; color:#6b7280; }
+    a { text-decoration:none; }
+    select { padding:.35rem .5rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🗳️ Election Data News</h1>
+    <a href="/" style="margin-left:auto;">← Back to site</a>
+  </header>
+
+  <form method="get">
+    <label for="topic">Filter by topic:</label>
+    <select name="topic" id="topic" onchange="this.form.submit()">
+      <option value="">All</option>
+      {% for t in topics %}
+        <option value="{{ t }}" {% if t == selected_topic %}selected{% endif %}>{{ t }}</option>
+      {% endfor %}
+    </select>
+    {% if selected_topic %}
+      <a href="/news" style="margin-left:.5rem;">Clear</a>
+    {% endif %}
+  </form>
+
+  {% if articles|length == 0 %}
+    <p>No articles found{% if selected_topic %} for topic “{{ selected_topic }}”{% endif %}.</p>
+  {% endif %}
+
+  {% for a in articles %}
+    <div class="article">
+      <h2><a href="{{ a.url }}" target="_blank" rel="noopener">{{ a.title }}</a></h2>
+      {% if a.summary %}<p>{{ a.summary }}</p>{% endif %}
+      <div class="meta">
+        <strong>Topics:</strong> {{ (a.topics or []) | join(', ') }}<br>
+        <strong>People:</strong> {{ (a.entities.people if a.entities else []) | join(', ') }}<br>
+        <strong>Locations:</strong> {{ (a.entities.locations if a.entities else []) | join(', ') }}
+      </div>
+    </div>
+  {% endfor %}
+</body>
+</html>
