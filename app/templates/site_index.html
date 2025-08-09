@@ -1,17 +1,161 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Election Data — Home</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>election data – AI insights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro&display=swap" rel="stylesheet">
   <style>
-    body { font-family: system-ui, Arial, sans-serif; margin: 2rem; line-height:1.5; }
-    a.button { display:inline-block; padding:.6rem .9rem; border:1px solid #111; border-radius:8px; text-decoration:none; }
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 120px;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Source Code Pro', monospace;
+      background-color: #f7f6f3;
+      color: #1e1e1e;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background-color: #f7f6f3;
+      padding: 24px 16px 12px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      color: #000;
+      margin: 0;
+    }
+
+    .tagline {
+      font-size: 1.1rem;
+      color: #666;
+      margin: 8px 0 24px;
+      letter-spacing: 0.8px;
+    }
+
+    .box-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .box {
+      background-color: #fff;
+      border-radius: 10px;
+      padding: 14px 26px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #1e1e1e;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .box:hover {
+      background-color: #eceae5;
+      border-color: #bbb;
+    }
+
+    .contact-inline {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: #444;
+    }
+
+    .contact-inline a {
+      color: #1e1e1e;
+      text-decoration: none;
+    }
+
+    .contact-inline a:hover {
+      text-decoration: underline;
+    }
+
+    .section {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 20px;
+      border-top: 1px solid #ddd;
+      text-align: left;
+      background-color: #fff;
+    }
+
+    .section h2 {
+      font-size: 1.3rem;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .section:nth-of-type(even) {
+      background-color: #f1f0ec;
+    }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      .box {
+        font-size: 0.9rem;
+        padding: 12px 18px;
+      }
+      .section {
+        padding: 60px 16px;
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Election Data</h1>
-  <p>Your homepage template is installed. Replace this with your real site HTML when ready.</p>
-  <p><a class="button" href="/news">Open the Local News Dashboard →</a></p>
+  <div class="header">
+    <h1>[election data]</h1>
+    <p class="tagline">Always on. Always collecting. Always predicting.</p>
+    <div class="box-container">
+      <a href="#predictive" class="box">[predictive modelling]</a>
+      <a href="#synthetic" class="box">[synthetic data]</a>
+      <a href="#polling" class="box">[conversational polling]</a>
+    </div>
+    <p class="contact-inline">
+      General enquiries: <a href="mailto:hello@election-data.io">hello@election-data.io</a>
+    </p>
+  </div>
+
+  <div id="predictive" class="section">
+    <h2>[predictive modelling]</h2>
+    <p>
+      Using machine learning algorithms to forecast electoral outcomes, voter behavior, and issue salience—
+      powered by real-time data and historical trends. Always-on forecasts that update with the pulse of democracy.
+    </p>
+  </div>
+
+  <div id="synthetic" class="section">
+    <h2>[synthetic data]</h2>
+    <p>
+      Generating anonymized synthetic election datasets that retain statistical meaning—but never compromise real privacy.
+    </p>
+  </div>
+
+  <div id="polling" class="section">
+    <h2>[conversational polling]</h2>
+    <p>
+      Adaptive, natural-language polling powered by AI. Conversational surveys that respect your time—and never demand a checkbox.
+    </p>
+  </div>
 </body>
 </html>
