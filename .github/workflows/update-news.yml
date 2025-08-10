@@ -1,29 +1,43 @@
 name: Update news data
+
 on:
-  schedule: [ { cron: "0 * * * *" } ]
+  schedule:
+    - cron: "0 * * * *"   # hourly
   workflow_dispatch:
+
+permissions:
+  contents: write   # allow committing & pushing
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions: { contents: write }
     steps:
-      - uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: |
+      - name: Checkout (full history, keep credentials)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
           python -m pip install --upgrade pip
           pip install feedparser beautifulsoup4 lxml requests
-      - run: python scripts/update_news.py
-      - name: Switch to data-updates branch and push
-        run: |
-          git checkout -B data-updates
-          if [ -n "$(git status --porcelain)" ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add data/combined_news.json data/constituency_rank.json
-            git commit -m "chore: refresh news + constituency summary [skip ci]"
-            git push -u origin data-updates
-          else
-            echo "No changes to commit."
-          fi
+
+      - name: Update JSONs
+        run: python scripts/update_news.py
+
+      # Commit to data-updates branch
+      - name: Commit & push data files
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+            commit_message: "chore: refresh news + constituency summary [skip ci]"
+            branch: data-updates
+            create_branch: true
+            file_pattern: |
+              data/combined_news.json
+              data/constituency_rank.json
