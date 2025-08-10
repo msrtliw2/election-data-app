@@ -1,5 +1,4 @@
 fastapi
 uvicorn
 jinja2
-requests
-# force rebuild
+requests==2.32.3
