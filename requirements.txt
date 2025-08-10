@@ -1,4 +1,4 @@
 fastapi
 uvicorn
 jinja2
-requests
+requests==2.32.3
