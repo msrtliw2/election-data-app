@@ -5,7 +5,7 @@
   <title>Local Constituency News</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- New font -->
+  <!-- Font -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -17,19 +17,14 @@
       background: #fafafa;
       color: #111;
     }
-
     header { 
       display:flex; 
       align-items:center; 
       gap:1rem; 
-      margin-bottom:1.25rem; 
+      margin-bottom:1rem; 
     }
-
-    h1 { 
-      font-size: 1.75rem; 
-      margin: 0; 
-    }
-
+    h1 { font-size: 1.75rem; margin: 0; }
+    .muted { color:#6b7280; font-size: 0.95rem; }
     .article { 
       margin: 1.25rem 0; 
       padding: 1rem 1.25rem; 
@@ -38,49 +33,42 @@
       background: #fff;
       box-shadow: 0 1px 3px rgba(0,0,0,0.05);
     }
-
     .meta { 
       font-size:.9rem; 
       color:#6b7280; 
       margin-top: .5rem;
     }
-
-    a { 
-      text-decoration:none; 
-      color: #0f62fe; 
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    select { 
-      padding:.35rem .5rem; 
-      font-size: 15px; 
-    }
-
-    form {
-      margin-bottom: 1.25rem;
-    }
+    a { text-decoration:none; color: #0f62fe; }
+    a:hover { text-decoration: underline; }
+    select { padding:.35rem .5rem; font-size: 15px; }
+    form { margin: .5rem 0 1rem; }
+    .toolbar { display:flex; align-items:center; gap:.5rem; flex-wrap: wrap; }
+    .spacer { flex: 1; }
   </style>
 </head>
 <body>
   <header>
     <h1>🗳️ Local Constituency News</h1>
-    <a href="/" style="margin-left:auto;">← Back to Home</a>
+    <div class="spacer"></div>
+    <a href="/">← Back to Home</a>
   </header>
 
-  <form method="get">
-    <label for="topic">Filter by topic:</label>
-    <select name="topic" id="topic" onchange="this.form.submit()">
-      <option value="">All</option>
-      {% for t in topics %}
-        <option value="{{ t }}" {% if t == selected_topic %}selected{% endif %}>{{ t }}</option>
-      {% endfor %}
-    </select>
-    {% if selected_topic %}
-      <a href="/news" style="margin-left:.5rem;">Clear</a>
-    {% endif %}
-  </form>
+  <div class="toolbar">
+    <form method="get">
+      <label for="topic">Filter by topic:</label>
+      <select name="topic" id="topic" onchange="this.form.submit()">
+        <option value="">All</option>
+        {% for t in topics %}
+          <option value="{{ t }}" {% if t == selected_topic %}selected{% endif %}>{{ t }}</option>
+        {% endfor %}
+      </select>
+      {% if selected_topic %}
+        <a href="/news" style="margin-left:.5rem;">Clear</a>
+      {% endif %}
+    </form>
+    <div class="spacer"></div>
+    <div class="muted">Last updated: {{ last_updated }}</div>
+  </div>
 
   {% if articles|length == 0 %}
     <p>No articles found{% if selected_topic %} for topic “{{ selected_topic }}”{% endif %}.</p>
