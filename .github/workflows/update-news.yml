@@ -1,46 +1,29 @@
 name: Update news data
-
 on:
-  schedule:
-    - cron: "0 * * * *"  # every hour
+  schedule: [ { cron: "0 * * * *" } ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    permissions: { contents: write }
     steps:
-      - name: Checkout main
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install deps
-        run: |
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: |
           python -m pip install --upgrade pip
           pip install feedparser beautifulsoup4 lxml requests
-
-      - name: Update JSONs
-        run: python scripts/update_news.py
-
-      - name: Switch to data-updates branch
+      - run: python scripts/update_news.py
+      - name: Switch to data-updates branch and push
         run: |
           git checkout -B data-updates
-
-      - name: Commit changes (if any)
-        run: |
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
             git add data/combined_news.json data/constituency_rank.json
             git commit -m "chore: refresh news + constituency summary [skip ci]"
-            git push origin data-updates
+            git push -u origin data-updates
           else
             echo "No changes to commit."
           fi
